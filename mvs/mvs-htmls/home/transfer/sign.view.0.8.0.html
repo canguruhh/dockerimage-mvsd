@@ -1,0 +1,77 @@
+<div class="content">
+	<span ng-show="symbol == 'ETP'" class="headline">{{ 'HEADLINE_ETP_TRANSFER' | translate }}</span>
+	<span ng-hide="symbol == 'ETP'" class="headline">{{ 'HEADLINE_ASSET_TRANSFER' | translate }} - {{symbol}}</span>
+	<!--Before sending a transaction-->
+	<div ng-hide="transferSuccess">
+		<ul class="nav nav-pills tabsMenu">
+			<li ng-show="symbol == 'ETP'" role="presentation"><a href="#!/transfer/ETP" class="btn-link-menu">{{ 'TRANSFER_TYPE_SIMPLE' | translate }}</a></li>
+			<li ng-hide="symbol == 'ETP'" role="presentation"><a href="#!/transfer/asset/{{symbol}}" class="btn-link-menu">{{ 'TRANSFER_TYPE_SIMPLE' | translate }}</a></li>
+			<li role="presentation"><a href="#!/transfer/multisignature/{{symbol}}" class="btn-link-menu">{{ 'TRANSFER_TYPE_MULTISIG' | translate }}</a></li>
+			<li role="presentation" class="active"><a class="btn-link-menu">{{ 'TRANSFER_TYPE_SIGN' | translate }}</a></li>
+		</ul>
+		<br/>
+		<form>
+			<div class="form-group">{{ 'TRANSFER_SIGN_HEADER' | translate}}:</div>
+			<textarea class="form-control" ng-model="transaction" rows="5"></textarea>
+			<br>
+			<div class="col-xs-12 noPaddingLeftRight spe-addrbox">
+				<div class="checkboxCircle">
+					<div class="checkbox-box">
+						<input type="checkbox" checked ng-model="lastTx" id="checkboxAgree" tabIndex="-1">
+						<label for="checkboxAgree"></label>
+					</div>
+					<span class="textCheckbox">{{ 'TRANSFER_SIGN_IS_LAST_TRANSACTION' | translate}}</span>
+				</div>
+			</div>
+			<div class="row col-xs-12 col-sm-6 noPaddingLeftRight">
+				</br>
+				<!--Password-->
+				<div class="form-group col-xs-12">
+					<label for="password" class="control-label">{{ 'TRANSFER_PASSWORD' | translate }}</label>
+					<input type="password" class="form-control" name="password" id="" ng-model="password" required ng-model="password" ng-class="{validInput: !errorPassword, wrongInput: errorPassword}">
+				</div>
+				<div class="col-xs-6 col-sm-6 col-md-6">
+					<input type="submit" class="btn btn-success" ng-click="signMultisigTx(transaction, password, lastTx)" ng-disabled="errorPassword || transaction.length == 0" value="{{ 'TRANSFER_SIGN_SIGN_BUTTON' | translate }}">
+				</div>
+				<div class="col-xs-6 col-sm-6 col-md-6">
+					<a href="#!/home" class="btn btn-success btn-success-secondary">{{ 'TRANSFER_MULTISIGNATURE_BACK_WALLET' | translate }}</a>
+				</div>
+			</div>
+		</form>
+	</div>
+
+	<!--After the signature-->
+	<div ng-show="transferSuccess">
+		<!--After signing NOT the last transaction-->
+		<div ng-hide="lastTx">
+			<div class="form-group"><b class="warningText">{{ 'TRANSFER_SIGN_SUCCESS' | translate}}</b></div>
+			<div class="form-group">
+				<!--<button class="btn btn-success smallButton" bs-popover data-clipboard-text="{{resultSignTx}}" data-toggle="popover" data-placement="top" data-content="{{ 'TRANSFER_MULTISIGNATURE_POPOVER_COPIED' | translate }}" role="button">
+					<span class="glyphicon glyphicon-file"></span>  {{ 'TRANSFER_MULTISIGNATURE_COPY_BUTTON' | translate }}
+				</button>-->
+			</div>
+			<textarea class="form-control" rows="5">{{resultSignTx}}</textarea>
+			<br>
+			<div class="col-xs-12 noPaddingLeftRight spe-addrbox checkboxAgreeSaved">
+				<div class="checkboxCircle">
+					<div class="checkbox-box">
+						<input type="checkbox" ng-model="fileSaved" id="checkboxAgreeSaved">
+						<label for="checkboxAgreeSaved"></label>
+					</div>
+					<span class="textCheckbox">{{ 'TRANSFER_MULTISIGNATURE_I_HAVE_COPIED' | translate}}</span>
+				</div>
+			</div>
+			<div ng-show="fileSaved">
+				<br/>
+				<div class="col-xs-6 col-sm-4 col-md-4 noPaddingLeftRight">
+					<a href="#!/home" class="btn btn-success">{{ 'TRANSFER_MULTISIGNATURE_BACK_WALLET' | translate }}</a>
+				</div>
+			</div>
+		</div>
+		<!--After signing the last transaction-->
+		<div ng-show="lastTx">
+			<div class="form-group">{{ 'TRANSFER_SIGN_LAST_TX_SUCCESS' | translate}}</div>
+		</div>
+
+	</div>
+</div>

@@ -1,0 +1,12 @@
+backtrace() returned 11 addresses
+./mvsd() [0x7d7d14]
+./mvsd() [0x7d8001]
+./mvsd() [0x532ffd]
+/usr/lib/libc.so.6(+0x368f0) [0x7ffa2f1688f0]
+/usr/lib/libc.so.6(syscall+0x17) [0x7ffa2f2250f7]
+./mvsd(_ZNSt28__atomic_futex_unsigned_base19_M_futex_wait_untilEPjjbNSt6chrono8durationIlSt5ratioILl1ELl1EEEENS2_IlS3_ILl1ELl1000000000EEEE+0xb6) [0xae9e86]
+./mvsd() [0x534230]
+./mvsd() [0x5345b6]
+./mvsd() [0x4f7afa]
+/usr/lib/libc.so.6(__libc_start_main+0xeb) [0x7ffa2f15506b]
+./mvsd(_start+0x29) [0x531d59]
